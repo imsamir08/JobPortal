@@ -1,0 +1,50 @@
+
+
+@import "tailwindcss";
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  align-items:center;
+ 
+}
+
+body{
+  background:#f8fafc;
+  font-family: Inter, Arial, sans-serif;
+  color:#111827;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  cursor:pointer;
+  
+}
+
+input,
+textarea,
+select{
+  outline:none;
+}
+
+/* .container-custom{
+  max-width:1200px;
+  margin:auto;
+  padding-left:24px;
+  padding-right:24px;
+} */
+
+.container-custom{
+    max-width:1500px;
+    margin:0 auto;
+    padding:0 40px;
+    /* padding-top: 20px;
+    padding-bottom: 20px; */
+    padding-left: 36px;
+    padding-right: 36px;
+}

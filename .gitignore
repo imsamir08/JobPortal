@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+npm-debug.log*
+
+# env files
+.env
+frontend/.env
+backend/.env
+
+# build files
+dist/
+build/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+logs
+*.log
+
+# uploads if you don't want local uploaded resumes/images pushed
+backend/uploads/*
+!backend/uploads/.gitkeep
