@@ -1,4 +1,4 @@
-# JobPortal Pro
+# JobPortal 
 
 A full-stack MERN Job Portal application with separate **Candidate** and **Recruiter** workflows.  
 Users can browse jobs, apply for jobs, manage profiles, and track applications, while recruiters can create jobs, manage postings, and view applicants.
