@@ -23,7 +23,6 @@ const protect = async (req, res, next) => {
   process.env.JWT_SECRET
 );
 
-console.log("Decoded Token:", decoded);
 
 req.user = decoded;
 

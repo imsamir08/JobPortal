@@ -1,38 +1,47 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const connectDB = require("./config/db");
-const app = express();
 const path = require("path");
 
-console.log(process.env.MONGO_URI);
+const connectDB = require("./config/db");
+
+const authRoutes = require("./routes/authRoutes");
+const jobRoutes = require("./routes/jobRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+
+const app = express();
+
 // Connect Database
 connectDB();
 
-const authRoutes = require(
-    "./routes/authRoutes"
-);
-const jobRoutes = require(
-  "./routes/jobRoutes"
-);
-const applicationRoutes = require(
-  "./routes/applicationRoutes"
+// CORS
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      process.env.CLIENT_URL,
+    ],
+    credentials: true,
+  })
 );
 
 // Middleware
-app.use(cors());
 app.use(express.json());
-app.use("/api/auth", authRoutes);
-app.use("/api/jobs", jobRoutes);
-app.use("/api/applications", applicationRoutes);
+
+// Static uploads folder
 app.use(
   "/uploads",
   express.static(
     path.join(__dirname, "uploads")
   )
 );
-// Test Route
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/applications", applicationRoutes);
+
+// Test Route
 app.get("/", (req, res) => {
   res.json({
     success: true,

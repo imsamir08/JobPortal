@@ -6,9 +6,6 @@ const Application = require(
 
 const applyJob = async (req, res) => {
   try {
-console.log("===== APPLY JOB =====");
-console.log("User ID:", req.user.id);
-console.log("Job ID:", req.params.jobId);
     const jobId = req.params.jobId;
     const userId = req.user.id;
     const alreadyApplied =
