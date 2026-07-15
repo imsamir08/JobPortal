@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { registerUser } from "../services/authService";
 import toast from "react-hot-toast";
+import Button from "../components/Button";
 
 function Register() {
   const [name, setName] = useState("");
