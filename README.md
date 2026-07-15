@@ -1,4 +1,4 @@
-# 💼 React Job Portal
+# 💼 Job Portal
 
 A modern **Job Portal** built with **React.js** and **Tailwind CSS** to demonstrate core and advanced React concepts through a real-world application.
 
