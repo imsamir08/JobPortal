@@ -15,12 +15,22 @@ const app = express();
 connectDB();
 
 // CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://job-portal-iota-pink.vercel.app",
+  "https://job-portal-imsamir08s-projects.vercel.app",
+  "https://job-portal-git-main-imsamir08s-projects.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      process.env.CLIENT_URL,
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
