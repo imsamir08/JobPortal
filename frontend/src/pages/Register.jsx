@@ -33,9 +33,7 @@ function Register() {
       <Navbar />
 
       <section className="min-h-[80vh] flex items-center justify-center px-6">
-
         <div className="w-full max-w-md bg-white border rounded-2xl shadow-sm p-8">
-
           <h1 className="text-3xl font-bold text-center">
             Create Account
           </h1>
@@ -82,12 +80,12 @@ function Register() {
                   setRole(e.target.value)
                 }
                 className="
-      w-full
-      h-12
-      border
-      rounded-lg
-      px-4
-    "
+                  w-full
+                  h-12
+                  border
+                  rounded-lg
+                  px-4
+                "
               >
 
                 <option value="candidate">
@@ -101,28 +99,13 @@ function Register() {
               </select>
 
             </div>
-
-            {/* <button
-              onClick={handleRegister}
-              className="
-              w-full
-              h-12
-              bg-blue-600
-              text-white
-              rounded-lg
-              hover:bg-blue-700
-              "
-            >
-              Register
-            </button> */}
-
-            <Button variant="primary">
-              onClick={handleRegister}
-          Register
-        </Button>
-
+            <Button
+            variant="primary"
+            onClick={handleRegister}
+          >
+            Register
+          </Button>
           </div>
-
         </div>
 
       </section>
