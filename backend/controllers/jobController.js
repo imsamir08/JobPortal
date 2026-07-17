@@ -40,79 +40,113 @@ const createJob = async (req, res) => {
 };
 
 // Get All Jobs + Search
+// Get All Jobs (Search + Filter + Pagination + Sorting)
 
 const getJobs = async (req, res) => {
-
   try {
-
-    const keyword =
-      req.query.keyword || "";
-
-    const location =
-      req.query.location || "";
-
-    const jobType =
-      req.query.jobType || "";
+    const {
+      search = "",
+      location = "",
+      jobType = "",
+      sort = "latest",
+      page = 1,
+      limit = 9,
+    } = req.query;
 
     const query = {};
 
-    if (keyword) {
-
+    // Search
+    if (search.trim()) {
       query.$or = [
-
-        {
-          title: {
-            $regex: keyword,
-            $options: "i",
-          },
-        },
-
-        {
-          company: {
-            $regex: keyword,
-            $options: "i",
-          },
-        },
-
+        { title: { $regex: search, $options: "i" } },
+        { company: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { location: { $regex: search, $options: "i" } },
       ];
-
     }
 
-    if (location) {
-
+    // Location Filter
+    if (location.trim()) {
       query.location = {
         $regex: location,
         $options: "i",
       };
-
     }
 
-    if (jobType) {
-
+    // Job Type Filter
+    if (jobType.trim()) {
       query.jobType = jobType;
-
     }
 
-    const jobs =
-      await Job.find(query)
-      .sort({
-        createdAt: -1,
-      });
+    // Sorting
+    let sortOption = {};
 
-    res.json({
+    switch (sort) {
+      case "oldest":
+        sortOption = { createdAt: 1 };
+        break;
+
+      case "salary-low":
+        sortOption = { salary: 1 };
+        break;
+
+      case "salary-high":
+        sortOption = { salary: -1 };
+        break;
+
+      case "company":
+        sortOption = { company: 1 };
+        break;
+
+      default:
+        sortOption = { createdAt: -1 };
+    }
+
+    const currentPage = Number(page);
+    const pageSize = Number(limit);
+
+    const skip = (currentPage - 1) * pageSize;
+
+    const [jobs, totalJobs] = await Promise.all([
+      Job.find(query)
+        .sort(sortOption)
+        .skip(skip)
+        .limit(pageSize),
+
+      Job.countDocuments(query),
+    ]);
+
+    const totalPages = Math.ceil(totalJobs / pageSize);
+
+    res.status(200).json({
       success: true,
-      jobs,
-    });
 
+      jobs,
+
+      pagination: {
+        page: currentPage,
+        limit: pageSize,
+        totalJobs,
+        totalPages,
+        hasNext: currentPage < totalPages,
+        hasPrev: currentPage > 1,
+      },
+
+      filters: {
+        search,
+        location,
+        jobType,
+        sort,
+      },
+    });
   } catch (error) {
+    console.error(error);
 
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
-
 };
 
 // Get Single Job

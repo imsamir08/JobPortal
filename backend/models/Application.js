@@ -25,9 +25,34 @@ const applicationSchema = new mongoose.Schema(
       ],
       default: "Applied",
     },
+
+    recruiterNotes: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    appliedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
+  }
+);
+
+/**
+ * Prevent duplicate applications.
+ * A user can apply only once for the same job.
+ */
+applicationSchema.index(
+  {
+    applicant: 1,
+    job: 1,
+  },
+  {
+    unique: true,
   }
 );
 

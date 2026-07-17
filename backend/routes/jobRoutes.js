@@ -1,11 +1,9 @@
 const express = require("express");
-
 const router = express.Router();
 
-const protect = require(
-  "../middleware/auth"
-);
+const protect = require("../middleware/auth");
 const recruiterOnly = require("../middleware/recruiter");
+
 const {
   createJob,
   getJobs,
@@ -16,24 +14,29 @@ const {
   getRecruiterDashboard,
 } = require("../controllers/jobController");
 
-// Public Routes
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
+// Get all jobs with
+// search
+// filter
+// pagination
+// sorting
 router.get("/", getJobs);
-router.get(
-  "/my-jobs",
-  protect,
-  getMyJobs
-);
 
+// Get single job
+router.get("/:id", getJobById);
 
-router.get(
-  "/recruiter-dashboard",
-  protect,
-  recruiterOnly,
-  getRecruiterDashboard
-);
+/*
+|--------------------------------------------------------------------------
+| Recruiter Routes
+|--------------------------------------------------------------------------
+*/
 
-// Protected Route
+// Create Job
 router.post(
   "/create",
   protect,
@@ -41,14 +44,31 @@ router.post(
   createJob
 );
 
+// Recruiter's jobs
+router.get(
+  "/my-jobs",
+  protect,
+  recruiterOnly,
+  getMyJobs
+);
 
-router.get("/:id", getJobById);
+// Recruiter dashboard
+router.get(
+  "/recruiter-dashboard",
+  protect,
+  recruiterOnly,
+  getRecruiterDashboard
+);
+
+// Update Job
 router.put(
   "/:id",
   protect,
   recruiterOnly,
   updateJob
 );
+
+// Delete Job
 router.delete(
   "/:id",
   protect,
